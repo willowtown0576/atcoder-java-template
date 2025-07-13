@@ -31,7 +31,7 @@ $ npm -v
 # online-judge-toolsは内部的にdistutilsを使用しており、
 # これが3.12で完全に削除されてしまっているため
 $ pip3 -V
-pip 25.1.1 from /opt/homebrew/lib/python3.13/site-packages/pip (python 3.13)
+pip 24.0 from /Users/willowtown0576/.pyenv/versions/3.11.9/lib/python3.11/site-packages/pip (python 3.11)
 ```
 
 ## ツールのインストール
@@ -61,6 +61,7 @@ online-judge-tools 11.5.1 (+ online-judge-api-client 10.10.1)
 ## ログイン
 
 ```sh
+# 2025年現在はログインできないかも。
 $ acc login
 ```
 
@@ -203,9 +204,12 @@ $ ./test.sh abc380 a
 - 問題の提出
 
 ```sh
+# 2025年7月現在だと、リアルタイムのコンテスト以外はこのツールを使って提出できない
+# Main.javaの内容をコピペして提出すること
 $ ./submit.sh abc380 a
 ```
 
 ## 参考URL
 
 [JavaでのAtCoder環境構築](https://qiita.com/HERUESTA/items/bed73a2906115c68ce11)
+[Java】標準入力を取得するコードまとめ](https://qiita.com/probabilityhill/items/71d3169bc3654b07e6fa)
