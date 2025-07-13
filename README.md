@@ -13,7 +13,7 @@ AtCoderでJavaを使用するための競技プログラミング専用開発環
 
 1. **プロジェクトを開く**
    ```bash
-   code atcoder-java
+   code atcoder-java-template
    ```
 
 2. **Dev Containerで開く**
