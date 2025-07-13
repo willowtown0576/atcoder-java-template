@@ -211,5 +211,5 @@ $ ./submit abc380 a
 
 ## 参考URL
 
-[JavaでのAtCoder環境構築](https://qiita.com/HERUESTA/items/bed73a2906115c68ce11)
-[Java】標準入力を取得するコードまとめ](https://qiita.com/probabilityhill/items/71d3169bc3654b07e6fa)
+- [JavaでのAtCoder環境構築](https://qiita.com/HERUESTA/items/bed73a2906115c68ce11)
+- [【Java】標準入力を取得するコードまとめ](https://qiita.com/probabilityhill/items/71d3169bc3654b07e6fa)
