@@ -198,7 +198,7 @@ $ acc new abc380
 - 問題のテスト
 
 ```sh
-$ ./test.sh abc380 a
+$ ./test abc380 a
 ```
 
 - 問題の提出
@@ -206,7 +206,7 @@ $ ./test.sh abc380 a
 ```sh
 # 2025年7月現在だと、リアルタイムのコンテスト以外はこのツールを使って提出できない
 # Main.javaの内容をコピペして提出すること
-$ ./submit.sh abc380 a
+$ ./submit abc380 a
 ```
 
 ## 参考URL

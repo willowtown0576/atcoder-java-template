@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# 使用方法: ./test.sh abc380 a
+# 使用方法: ./test abc380 a
 
 if [ $# -ne 2 ]; then
   echo "使い方: $0 <コンテスト名> <問題番号>"
