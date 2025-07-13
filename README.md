@@ -1,215 +1,163 @@
+# AtCoder Java 環境
 
-# Java
+AtCoderでJavaを使用するための競技プログラミング専用開発環境です。VSCode Dev Containersを使用して簡単にセットアップできます。
 
-- Javaがインストールされていること
+## 🚀 クイックスタート
 
-```sh
-# 特にバージョンの指定はなし
-$ java --version
-openjdk 23.0.2 2025-01-21
-OpenJDK Runtime Environment Homebrew (build 23.0.2)
-OpenJDK 64-Bit Server VM Homebrew (build 23.0.2, mixed mode, sharing)
+### 必要なもの
+- VSCode
+- Dev Containers拡張機能
+- Docker
 
+### セットアップ手順
+
+1. **プロジェクトを開く**
+   ```bash
+   code atcoder-java
+   ```
+
+2. **Dev Containerで開く**
+   - `Ctrl+Shift+P` でコマンドパレットを開く
+   - `Dev Containers: Reopen in Container` を選択
+   - 初回は自動的にコンテナがビルドされます
+
+3. **AtCoderにログイン**
+   ```bash
+   # ここは飛ばしても過去問のダウンロードは可能です
+   acc login
+   ```
+
+## 📝 基本的な使い方
+
+### 問題のダウンロード
+
+```bash
+# 例: ABC380の問題をダウンロード
+acc new abc380
 ```
 
-# AtCoder関連ツールのインストール
+### 問題を解く
 
-## npm, pip3がインストールされていることを確認
+1. `abc380/a/Main.java` を開く
+2. コードを書く
+3. テストを実行する
 
-- npm
+### テスト実行
 
-```sh
-# 特にバージョンの指定はなし
-$ npm -v
-11.3.0
+**方法1: VSCodeタスク（推奨）**
+- `Ctrl+Shift+P` → `Tasks: Run Task` → `AtCoder: Test Current Problem`
+
+**方法2: コマンドライン**
+```bash
+./test abc380 a
 ```
 
-- pip3
+### 提出
 
-```sh
-# Pythonは3.11までのバージョンを使用すること
-# online-judge-toolsは内部的にdistutilsを使用しており、
-# これが3.12で完全に削除されてしまっているため
-$ pip3 -V
-pip 24.0 from /Users/willowtown0576/.pyenv/versions/3.11.9/lib/python3.11/site-packages/pip (python 3.11)
+**方法1: VSCodeタスク（推奨）**
+- `Ctrl+Shift+P` → `Tasks: Run Task` → `AtCoder: Submit Current Problem`
+
+**方法2: コマンドライン**
+```bash
+./submit abc380 a
 ```
 
-## ツールのインストール
+## ⚡ VSCodeの便利機能
 
-- atcoder-cli
+### タスク機能
+- `Ctrl+Shift+P` → `Tasks: Run Task` で以下が利用可能：
+  - **AtCoder: Download Contest** - 問題のダウンロード
+  - **AtCoder: Test Current Problem** - 現在の問題をテスト
+  - **AtCoder: Submit Current Problem** - 現在の問題を提出
+  - **AtCoder: Login** - AtCoderにログイン
 
-```sh
-$ npm install -g atcoder-cli
-$ acc -v
-2.2.0
+### デバッグ機能
+- `F5` でデバッグ実行
+- ブレークポイントで変数値を確認
+- ステップ実行でロジックを追跡
+
+### コード実行
+- `Ctrl+F5` でコードを直接実行（Code Runner）
+
+## 🛠️ 手動でのコンテナ操作
+
+VSCode以外でコンテナを操作したい場合：
+
+```bash
+# コンテナをビルド・起動
+docker-compose up -d --build
+
+# コンテナに入る
+docker-compose exec atcoder-java bash
+
+# コンテナを停止
+docker-compose down
 ```
 
-- online-judge-tools
-
-```sh
-$ pip3 install online-judge-tools
-
-# Homebrewによって管理されているPythonの場合、システム環境に直接パッケージをインストールするのは危険と判断され、インストールが失敗することがある。
-# pipの代わりにpipxを使用する
-$ brew install pipx
-$ pipx install online-judge-tools --python <3.11以下のPythonのパス>
-
-$ oj --version
-online-judge-tools 11.5.1 (+ online-judge-api-client 10.10.1)
-```
-
-## ログイン
-
-```sh
-# 2025年現在はログインできないかも。
-$ acc login
-```
-
-## 追加設定
-
-- 問題を全てダウンロード
+## 📁 プロジェクト構造
 
 ```
-$ acc config default-task-choice all
+atcoder-java/
+├── .devcontainer/      # Dev Container設定
+├── .vscode/           # VSCode設定（タスク、デバッグ等）
+├── abc380/           # 問題ディレクトリ（実行時に作成）
+│   ├── a/
+│   │   ├── Main.java
+│   │   └── test/      # サンプル入出力
+│   └── ...
+├── test              # テスト実行スクリプト
+└── submit            # 提出スクリプト
 ```
 
-- テンプレートの作成
+## 🔧 環境詳細
 
-```sh
-# atcoder-cli設定ディレクトリに移動
-$ cd `acc config-dir`
+### インストール済みツール
+- **Java**: OpenJDK 17
+- **Python**: 3.10（atcoder-cli, online-judge-tools用）
+- **Node.js**: 18.x（atcoder-cli用）
+- **atcoder-cli**: 問題ダウンロード・提出
+- **online-judge-tools**: テスト実行
 
-# テンプレート作成
-$ mkdir java && cd java
-$ touch template.json
-$ touch Main.java
-```
+### VSCode拡張機能
+- Java Extension Pack
+- Java Language Support
+- Code Runner
 
-各ファイルの中身は以下を設定する
-
-- template.json
-
-```json
-{
-  "task":{
-    "program": ["Main.java"],
-    "submit": "Main.java",
-	"testdir": "test"
-  }
-}
-```
-
-- Main.java
+### Javaテンプレート
 
 ```java
-import java.util.Scanner;
+import java.util.*;
 
-/**
- * AtCoder Java Template
- */
 public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
+
+
+        sc.close();
     }
 }
 ```
 
-上記設定をテンプレート化
+## 🔍 トラブルシューティング
 
-```sh
-$ acc config default-template java
+### Dockerビルドエラー
+```bash
+# キャッシュをクリアしてリビルド
+docker-compose build --no-cache
 ```
 
-## コンテストを実施するにあたって
-
-- 問題のダウンロード
-
-```sh
-$ acc new abc380
+### 権限エラー
+```bash
+# テスト・提出スクリプトに実行権限を付与
+chmod +x test submit
 ```
 
-以下のようにディレクトリが作成されます
+### atcoder-cliでログインできない
+- ブラウザでAtCoderにログイン後、再度 `acc login` を実行
 
-```text
-.
-└── abc380
-    ├── a
-    │   ├── Main.java
-    │   └── test
-    │       ├── sample-1.in
-    │       ├── sample-1.out
-    │       ├── sample-2.in
-    │       ├── sample-2.out
-    │       ├── sample-3.in
-    │       ├── sample-3.out
-    │       ├── sample-4.in
-    │       └── sample-4.out
-    ├── b
-    │   ├── Main.java
-    │   └── test
-    │       ├── sample-1.in
-    │       ├── sample-1.out
-    │       ├── sample-2.in
-    │       ├── sample-2.out
-    │       ├── sample-3.in
-    │       └── sample-3.out
-    ├── c
-    │   ├── Main.java
-    │   └── test
-    │       ├── sample-1.in
-    │       ├── sample-1.out
-    │       ├── sample-2.in
-    │       └── sample-2.out
-    ├── contest.acc.json
-    ├── d
-    │   ├── Main.java
-    │   └── test
-    │       ├── sample-1.in
-    │       ├── sample-1.out
-    │       ├── sample-2.in
-    │       ├── sample-2.out
-    │       ├── sample-3.in
-    │       └── sample-3.out
-    ├── e
-    │   ├── Main.java
-    │   └── test
-    │       ├── sample-1.in
-    │       └── sample-1.out
-    ├── f
-    │   ├── Main.java
-    │   └── test
-    │       ├── sample-1.in
-    │       ├── sample-1.out
-    │       ├── sample-2.in
-    │       ├── sample-2.out
-    │       ├── sample-3.in
-    │       └── sample-3.out
-    └── g
-        ├── Main.java
-        └── test
-            ├── sample-1.in
-            ├── sample-1.out
-            ├── sample-2.in
-            ├── sample-2.out
-            ├── sample-3.in
-            └── sample-3.out
-```
+## 📚 参考リンク
 
-- 問題のテスト
-
-```sh
-$ ./test abc380 a
-```
-
-- 問題の提出
-
-```sh
-# 2025年7月現在だと、リアルタイムのコンテスト以外はこのツールを使って提出できない
-# Main.javaの内容をコピペして提出すること
-$ ./submit abc380 a
-```
-
-## 参考URL
-
-- [JavaでのAtCoder環境構築](https://qiita.com/HERUESTA/items/bed73a2906115c68ce11)
-- [【Java】標準入力を取得するコードまとめ](https://qiita.com/probabilityhill/items/71d3169bc3654b07e6fa)
+- [AtCoder](https://atcoder.jp/)
+- [atcoder-cli](https://github.com/Tatamo/atcoder-cli)
+- [online-judge-tools](https://github.com/online-judge-tools/oj)
+- [VSCode Dev Containers](https://code.visualstudio.com/docs/remote/containers)
