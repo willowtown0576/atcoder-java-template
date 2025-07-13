@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  atcoder-java:
+    build: .
+    container_name: atcoder-java-dev
+    volumes:
+      - .:/workspace
+      - atcoder-config:/root/.config/atcoder-cli-nodejs
+    working_dir: /workspace
+    stdin_open: true
+    tty: true
+    environment:
+      - TZ=Asia/Tokyo
+    command: /bin/bash
+
+volumes:
+  atcoder-config:
