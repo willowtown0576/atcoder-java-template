@@ -18,7 +18,10 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # OpenJDK 17のインストール (AtCoderでサポートされているバージョン)
-RUN apt-get update && apt-get install -y openjdk-17-jdk && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y openjdk-17-jdk && rm -rf /var/lib/apt/lists/* && \
+    # クロスプラットフォーム対応: 実際のJavaパスから固定パスへのシンボリックリンク作成
+    JAVA_PATH=$(find /usr/lib/jvm -name "java-17-openjdk*" -type d | head -1) && \
+    ln -sf "$JAVA_PATH" /usr/lib/jvm/java-17-openjdk
 
 # Python 3.10のインストール (競技プログラミング用最小構成)
 RUN apt-get update && apt-get install -y \
@@ -82,12 +85,11 @@ COPY submit /workspace/submit
 
 # 実行権限を付与
 RUN chmod +x /workspace/test /workspace/submit
-
 # 完了メッセージ
 RUN echo "AtCoder Java Environment Ready!"
 
 # 環境変数の設定
-ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk
 ENV PATH=$JAVA_HOME/bin:$PATH
 
 # デフォルトコマンド
